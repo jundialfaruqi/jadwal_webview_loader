@@ -15,6 +15,7 @@ class WebViewPage extends StatefulWidget {
 
 class _WebViewPageState extends State<WebViewPage> {
   late final WebViewController _controller;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -26,7 +27,15 @@ class _WebViewPageState extends State<WebViewPage> {
       ..setUserAgent(desktopChromeUserAgent)
       ..setNavigationDelegate(
         NavigationDelegate(
+          onPageStarted: (url) {
+            setState(() {
+              _isLoading = true;
+            });
+          },
           onPageFinished: (url) async {
+            setState(() {
+              _isLoading = false;
+            });
             Future.delayed(
                 const Duration(milliseconds: 300), () => _applySystemFonts());
             Future.delayed(const Duration(milliseconds: 600),
@@ -96,7 +105,15 @@ class _WebViewPageState extends State<WebViewPage> {
           )
         ],
       ),
-      body: WebViewWidget(controller: _controller),
+      body: Stack(
+        children: [
+          WebViewWidget(controller: _controller),
+          if (_isLoading)
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+        ],
+      ),
     );
   }
 }

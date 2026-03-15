@@ -139,11 +139,6 @@ class _UrlFormPageState extends State<UrlFormPage> {
                       controller: _controller,
                       decoration: InputDecoration(
                         labelText: 'Slug Masjid',
-                        prefixText: baseUrl,
-                        prefixStyle: TextStyle(
-                          color: cs.onSurfaceVariant,
-                          fontWeight: FontWeight.w600,
-                        ),
                         hintText: 'masjid-annur',
                         filled: true,
                         fillColor: cs.surface,
